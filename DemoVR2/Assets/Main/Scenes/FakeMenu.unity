@@ -4722,7 +4722,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &304047849
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8472,6 +8472,9 @@ MonoBehaviour:
   closeButton: {fileID: 304047848}
   textWithNumber: {fileID: 479021001}
   stringToShow: 'Button pressed is:'
+  timeToCloseMenu: 0.5
+  minScaleForMenu: 0.001
+  maxScaleForMenu: 1
 --- !u!1001 &606998518
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10329,7 +10332,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &788713724
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26498,7 +26501,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1971909574
 RectTransform:
   m_ObjectHideFlags: 0

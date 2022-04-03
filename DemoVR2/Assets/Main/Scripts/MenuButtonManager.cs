@@ -38,14 +38,28 @@ public class MenuButtonManager : MonoBehaviour
 
 
     /// <summary>
+    /// Time that the closing/opening interaction will last
+    /// </summary>
+    public float timeToCloseMenu = 1f;
+
+    public float minScaleForMenu = 0.001f;
+
+    public float maxScaleForMenu = 1f;
+
+    /// <summary>
+    /// The state of the menu. At the start we want this closed
+    /// </summary>
+    private bool isMenuClosed = true;
+
+    private RectTransform menuTransform;
+
+    /// <summary>
     /// Method called when the button is selected to show the menu.
     /// This also hides the open menu and shows the close one
     /// </summary>
     public void OpenMenuButton()
     {
-        menuPanel.SetActive(true);
-        openButton.SetActive(false);
-        closeButton.SetActive(true);
+        StartCoroutine(CloseMenuSmoothly(false));
     }
 
     /// <summary>
@@ -53,11 +67,7 @@ public class MenuButtonManager : MonoBehaviour
     /// </summary>
     public void CloseMenuButton()
     {
-        menuPanel.SetActive(false);
-        //instead of this you could use just 1 button,
-        //check a local state and just change the text of the button. I like the easy way, sorry
-        openButton.SetActive(true);
-        closeButton.SetActive(false);
+        StartCoroutine(CloseMenuSmoothly(true));
     }
 
     /// <summary>
@@ -71,4 +81,47 @@ public class MenuButtonManager : MonoBehaviour
         textWithNumber.text = stringToShow + number;
     }
 
+    /// <summary>
+    /// Method enumerator called to smoothly transition the Menu.
+    /// If is closing, the method will shrink the menu and close it.
+    /// If it is opening (isClosing=false), then it will go back to the normale scale from small.
+    /// </summary>
+    /// <param name="isClosing">the parameter that say if it is shrinking or not</param>
+    /// <returns> nothing, the return is used to  wait for the next frame and continue execution</returns>
+    private IEnumerator CloseMenuSmoothly(bool isClosing)
+    {
+        if (menuTransform == null)
+        {
+            menuTransform = menuPanel.GetComponent<RectTransform>();
+        }
+        if (isClosing && !isMenuClosed)
+        {
+            while (menuTransform.localScale.x > minScaleForMenu)
+            {
+                menuTransform.localScale -=  Time.deltaTime/ timeToCloseMenu * Vector3.one;
+                yield return null;
+            }
+            menuPanel.SetActive(false);
+            //instead of this you could use just 1 button,
+            //check a local state and just change the text of the button. I like the easy way, sorry
+            openButton.SetActive(true);
+            closeButton.SetActive(false);
+            isMenuClosed = true;
+        }
+        if(!isClosing && isMenuClosed)
+        {
+            menuPanel.SetActive(true);
+            menuTransform.localScale = Vector3.one*0.01f;
+            while (menuTransform.localScale.x < maxScaleForMenu)
+            {
+                menuTransform.localScale +=  Time.deltaTime/ timeToCloseMenu * Vector3.one;
+                yield return null;
+            }
+            menuTransform.localScale = Vector3.one;
+
+            openButton.SetActive(false);
+            closeButton.SetActive(true);
+            isMenuClosed = false;
+        }
+    }
 }
