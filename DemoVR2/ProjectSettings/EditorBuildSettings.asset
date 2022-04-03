@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Main/Scenes/FakeMenu.unity
+    guid: 78248e23c63171d4d83c3587e21a21bb
+  - enabled: 1
     path: Assets/Main/Scenes/Shooter.unity
     guid: 01c1322bba1296042bd34df05146b46e
   - enabled: 1
